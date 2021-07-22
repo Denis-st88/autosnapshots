@@ -1,0 +1,1 @@
+init: ansible-playbook -i hosts.yml server.yml

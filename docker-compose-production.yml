@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  gateway:
+    image: ${REGISTRY}/autosnapshots-gateway:${IMAGE_TAG}
+    restart: always
+    volumes:
+    - /etc/letsencrypt:/etc/letsencrypt:ro
+    - /var/www/html:/var/www/html:ro
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - frontend
+      - api
+
+  frontend:
+    image: ${REGISTRY}/autosnapshots-frontend:${IMAGE_TAG}
+    restart: always
+
+  api:
+    image: ${REGISTRY}/autosnapshots-api:${IMAGE_TAG}
+    restart: always
+    depends_on:
+      - api-php-fpm
+
+  api-php-fpm:
+    image: ${REGISTRY}/autosnapshots-api-php-fpm:${IMAGE_TAG}
+    restart: always

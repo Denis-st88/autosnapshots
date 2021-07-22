@@ -1,0 +1,44 @@
+---
+-   name: Update repositories cache and install Snap package
+    apt:
+        name: snapd
+        update_cache: yes
+
+-   name: Get the latest version Snapd
+    snap:
+        name: core
+
+-   name: Refresh Core
+    command: snap refresh core
+
+-   name: Remove Certbot package
+    apt:
+        name: certbot
+        state: absent
+
+-   name: Install Certbot with option --classic
+    snap:
+        name: certbot
+        classic: yes
+
+-   name: Prepare the Certbot command
+    ansible.builtin.file:
+        src: /snap/bin/certbot
+        dest: /usr/bin/certbot
+        state: link
+
+-   name: Copy Certbot configuration
+    copy:
+        src: files/cli.ini
+        dest: /etc/letsencrypt/cli.ini
+        owner: root
+        group: root
+        mode: 0644
+
+-   name: Remove useless packages
+    apt:
+      autoclean: yes
+
+-   name: Remove useless dependencies
+    apt:
+      autoremove: yes
