@@ -1,0 +1,21 @@
+{
+    "name": "auto/snapshots",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Denis Stroev",
+            "email": "denis.stroev88@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "config": {
+      "process-timeout": 0,
+      "sort-packages": true
+    },
+    "require": {
+        "php": "^8.0"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
+    }
+}
