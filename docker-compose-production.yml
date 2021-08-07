@@ -26,3 +26,10 @@ services:
   api-php-fpm:
     image: ${REGISTRY}/autosnapshots-api-php-fpm:${IMAGE_TAG}
     restart: always
+    environment:
+      APP_DEBUG: 0
+
+  api-php-cli:
+    image: ${REGISTRY}/autosnapshots-cli-php-fpm:${IMAGE_TAG}
+    environment:
+      APP_DEBUG: 0

@@ -3,16 +3,15 @@
 declare(strict_types=1);
 
 use Slim\Factory\AppFactory;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\RequestInterface;
+
+http_response_code(500);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$app = AppFactory::create();
+$container = require __DIR__ . '/../config/container.php';
+$app = AppFactory::createFromContainer($container);
 
-$app->get('/', function (RequestInterface $request, ResponseInterface $response, $args) {
-    $response->getBody()->write('{TEST OK}');
-    return $response->withHeader('Content-Type', 'application/json');
-});
+(require __DIR__ . '/../config/middleware.php')($app, $container);
+(require __DIR__ . '/../config/routes.php')($app);
 
 $app->run();
