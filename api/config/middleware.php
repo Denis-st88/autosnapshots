@@ -6,5 +6,5 @@ use Slim\App;
 use Psr\Container\ContainerInterface;
 
 return static function (App $app, ContainerInterface $container): void {
-    $app->addErrorMiddleware($container->get('congig')['debug'], true, true);
+    $app->addErrorMiddleware($container->get('config')['debug'], true, true);
 };
