@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Http;
 
 use Slim\Psr7\Headers;
 use Slim\Psr7\Response;

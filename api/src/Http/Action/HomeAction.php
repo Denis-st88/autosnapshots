@@ -2,9 +2,7 @@
 
 namespace App\Http\Action;
 
-use App\JsonResponse;
-use stdClass;
-use App\Http;
+use App\Http\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -17,6 +15,6 @@ class HomeAction implements RequestHandlerInterface
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return new JsonResponse(new stdClass());
+        return new JsonResponse([]);
     }
 }
