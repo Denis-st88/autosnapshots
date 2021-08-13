@@ -7,7 +7,7 @@ use Symfony\Component\Console\Application;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-/** @var \Psr\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = require __DIR__ . '/../config/container.php';
 
 $cli = new Application('Console');
