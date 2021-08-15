@@ -15,6 +15,6 @@ class HomeAction implements RequestHandlerInterface
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return new JsonResponse(xdebug_info());
+        return new JsonResponse('[]');
     }
 }
