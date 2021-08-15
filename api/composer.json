@@ -22,6 +22,7 @@
         "symfony/console": "^5.3"
     },
     "require-dev": {
+        "overtrue/phplint": "8.0.x-dev",
         "roave/security-advisories": "dev-latest"
     },
     "autoload": {
@@ -30,6 +31,7 @@
         }
     },
     "scripts": {
+      "lint": "phplint",
       "app": "php bin/app.php --ansi"
     }
 }
