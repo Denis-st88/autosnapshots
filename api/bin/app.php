@@ -12,9 +12,16 @@ $container = require __DIR__ . '/../config/container.php';
 
 $cli = new Application('Console');
 
+/**
+ * @var string[] $commands
+ * @psalm-suppress MixedArrayAccess
+ */
 $commands = $container->get('config')['console']['commands'];
-foreach ($commands as $command) {
-    $cli->add($container->get($command));
+
+foreach ($commands as $name) {
+    /** @var Symfony\Component\Console\Command\Command $command */
+    $command = $container->get($name);
+    $cli->add($command);
 }
 
 $cli->run();

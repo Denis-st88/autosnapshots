@@ -6,6 +6,7 @@ restart: down up
 ps: docker-ps
 api-init: api-composer-install
 lint: api-lint
+analyze: api-analyze
 
 docker-ps:
 	docker-compose ps
@@ -31,6 +32,9 @@ api-composer-install:
 api-lint:
 	docker-compose run --rm api-php-cli composer lint
 	docker-compose run --rm api-php-cli composer cs-check
+
+api-analyze:
+	docker-compose run --rm api-php-cli composer psalm
 
 # build
 build: build-gateway build-frontend build-api

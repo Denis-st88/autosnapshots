@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http;
 
 use Slim\Psr7\Headers;
@@ -12,6 +14,11 @@ use Slim\Psr7\Factory\StreamFactory;
  */
 class JsonResponse extends Response
 {
+    /**
+     * @param mixed $data
+     * @param int $status
+     * @throws \JsonException
+     */
     public function __construct($data, int $status = 200)
     {
         parent::__construct(
