@@ -23,6 +23,7 @@
     },
     "require-dev": {
         "overtrue/phplint": "8.0.x-dev",
+        "phpunit/phpunit": "^9",
         "roave/security-advisories": "dev-latest",
         "squizlabs/php_codesniffer": "3.*",
         "vimeo/psalm": "4.x-dev"
@@ -32,11 +33,17 @@
             "App\\": "src/"
         }
     },
+    "autoload-dev": {
+      "psr-4": {
+        "Test\\": "tests/"
+      }
+    },
     "scripts": {
       "lint": "phplint",
       "cs-check": "phpcs",
       "cs-fix": "phpcbf",
       "psalm": "psalm",
+      "test": "phpunit --colors=always",
       "app": "php bin/app.php --ansi"
     }
 }
