@@ -44,6 +44,7 @@
       "cs-fix": "phpcbf",
       "psalm": "psalm",
       "test": "phpunit --colors=always",
+      "test-coverage": "phpunit --colors=always --coverage-html var/coverage",
       "app": "php bin/app.php --ansi"
     }
 }
