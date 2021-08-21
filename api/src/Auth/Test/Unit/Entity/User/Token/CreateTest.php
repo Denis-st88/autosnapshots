@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Test\Entity\User;
+namespace App\Auth\Test\Unit\Entity\User\Token;
 
 use Ramsey\Uuid\Uuid;
 use DateTimeImmutable;
@@ -13,7 +13,7 @@ use App\Auth\Entity\User\Token;
 /**
  * @covers Token
  */
-class TokenTest extends TestCase
+class CreateTest extends TestCase
 {
     public function testSuccess(): void
     {
@@ -29,7 +29,8 @@ class TokenTest extends TestCase
     public function testCase(): void
     {
         $value = Uuid::uuid4()->toString();
-        $token = new Token(mb_strtoupper($value), new DateTimeImmutable());
+
+        $token = new Token(mb_strtoupper($value), $expires = new DateTimeImmutable());
 
         self::assertEquals($value, $token->getValue());
     }

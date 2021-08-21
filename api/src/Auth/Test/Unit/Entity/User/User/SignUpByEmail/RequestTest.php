@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Test\Entity\User\User\SignUpByEmail;
+namespace App\Auth\Test\Unit\Entity\User\User\SignUpByEmail;
 
 use Ramsey\Uuid\Uuid;
 use DateTimeImmutable;
@@ -32,5 +32,8 @@ class RequestTest extends TestCase
         self::assertEquals($email, $user->getEmail());
         self::assertEquals($hash, $user->getPasswordHash());
         self::assertEquals($token, $user->getSignUpConfirmToken());
+
+        self::assertTrue($user->isWait());
+        self::assertFalse($user->isActive());
     }
 }

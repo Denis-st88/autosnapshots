@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\Test\Entity\User;
+namespace App\Auth\Test\Unit\Entity\User;
 
 use Ramsey\Uuid\Uuid;
 use App\Auth\Entity\User\Id;

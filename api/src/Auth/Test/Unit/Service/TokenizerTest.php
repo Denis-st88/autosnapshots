@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use App\Auth\Service\Tokenizer;
 
 /**
- * @covers
+ * @covers Tokenizer
  */
 class TokenizerTest extends TestCase
 {
