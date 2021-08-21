@@ -6,8 +6,8 @@ namespace App\Auth\Test\Entity\User;
 
 use Ramsey\Uuid\Uuid;
 use App\Auth\Entity\User\Id;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\InvalidArgumentException;
 
 /**
  * @covers

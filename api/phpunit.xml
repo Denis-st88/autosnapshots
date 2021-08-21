@@ -12,15 +12,15 @@
          verbose="true">
     <testsuites>
         <testsuite name="unit">
-            <directory>tests/Unit</directory>
+            <directory>src/Auth/Test</directory>
+            <directory>src/Http/Test</directory>
         </testsuite>
-      <testsuite name="functional">
-        <directory>tests/Functional</directory>
-      </testsuite>
+        <testsuite name="functional">
+          <directory>tests/Functional</directory>
+        </testsuite>
     </testsuites>
 
-    <coverage cacheDirectory=".phpunit.cache/code-coverage"
-              processUncoveredFiles="true">
+    <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">src</directory>
         </include>

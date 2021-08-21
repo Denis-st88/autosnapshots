@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Auth\Test\Entity\User;
 
+use InvalidArgumentException;
 use App\Auth\Entity\User\Email;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\InvalidArgumentException;
 
 /**
  * @covers Email

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Auth\Entity\User;
 
 use Webmozart\Assert\Assert;
-use http\Exception\InvalidArgumentException;
+use InvalidArgumentException;
 
 class Email
 {

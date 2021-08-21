@@ -6,9 +6,9 @@ namespace App\Auth\Test\Entity\User;
 
 use Ramsey\Uuid\Uuid;
 use DateTimeImmutable;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use App\Auth\Entity\User\Token;
-use PHPUnit\Framework\InvalidArgumentException;
 
 /**
  * @covers Token
