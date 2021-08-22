@@ -9,12 +9,12 @@ use Webmozart\Assert\Assert;
 
 class Id
 {
-    private string $_value;
+    private string $value;
 
     public function __construct(string $value)
     {
         Assert::uuid($value);
-        $this->_value = mb_strtolower($value);
+        $this->value = mb_strtolower($value);
     }
 
     public static function generate(): self
@@ -24,6 +24,6 @@ class Id
 
     public function getValue(): string
     {
-        return $this->_value;
+        return $this->value;
     }
 }

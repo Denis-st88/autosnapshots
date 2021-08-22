@@ -11,38 +11,37 @@ use DateTimeImmutable;
 
 class Handler
 {
-    private UserRepository $_users;
-    private Tokenizer $_tokenizer;
-    private Flusher $_flusher;
-    private PasswordResetTokenSender $_sender;
+    private UserRepository $users;
+    private Tokenizer $tokenizer;
+    private Flusher $flusher;
+    private PasswordResetTokenSender $sender;
 
     public function __construct(
         UserRepository $users,
         Tokenizer $tokenizer,
         Flusher $flusher,
         PasswordResetTokenSender $sender
-    )
-    {
-        $this->_users = $users;
-        $this->_tokenizer = $tokenizer;
-        $this->_flusher = $flusher;
-        $this->_sender = $sender;
+    ) {
+        $this->users = $users;
+        $this->tokenizer = $tokenizer;
+        $this->flusher = $flusher;
+        $this->sender = $sender;
     }
 
     public function handle(Command $command): void
     {
         $email = new Email($command->email);
 
-        $user = $this->_users->getByEmail($email);
+        $user = $this->users->getByEmail($email);
 
         $date = new DateTimeImmutable();
 
         $user->requestPasswordReset(
-            $token = $this->_tokenizer->generate($date),
+            $token = $this->tokenizer->generate($date),
             $date
         );
 
-        $this->_flusher->flush();
-        $this->_sender->send($email, $token);
+        $this->flusher->flush();
+        $this->sender->send($email, $token);
     }
 }

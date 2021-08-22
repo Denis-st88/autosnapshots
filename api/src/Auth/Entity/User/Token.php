@@ -6,18 +6,17 @@ namespace App\Auth\Entity\User;
 
 use DateTimeImmutable;
 use Webmozart\Assert\Assert;
-use function DI\value;
 
 class Token
 {
-    private string $_value;
-    private DateTimeImmutable $_expires;
+    private string $value;
+    private DateTimeImmutable $expires;
 
     public function __construct(string $value, DateTimeImmutable $expires)
     {
         Assert::uuid($value);
-        $this->_value = mb_strtolower($value);
-        $this->_expires = $expires;
+        $this->value = mb_strtolower($value);
+        $this->expires = $expires;
     }
 
     public function validate(string $value, DateTimeImmutable $date): void
@@ -33,21 +32,21 @@ class Token
 
     private function isEqualTo(string $value): bool
     {
-        return $this->_value === $value;
+        return $this->value === $value;
     }
 
     public function isExpiredTo(DateTimeImmutable $date): bool
     {
-        return $this->_expires <= $date;
+        return $this->expires <= $date;
     }
 
     public function getValue(): string
     {
-        return $this->_value;
+        return $this->value;
     }
 
     public function getExpires(): DateTimeImmutable
     {
-        return $this->_expires;
+        return $this->expires;
     }
 }

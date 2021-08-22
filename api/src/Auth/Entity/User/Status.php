@@ -9,11 +9,11 @@ class Status
     private const WAIT = 'wait';
     private const ACTIVE = 'active';
 
-    private string $_name;
+    private string $name;
 
     private function __construct(string $name)
     {
-        $this->_name = $name;
+        $this->name = $name;
     }
 
     public static function wait(): self
@@ -28,11 +28,11 @@ class Status
 
     public function isWait(): bool
     {
-        return $this->_name === self::WAIT;
+        return $this->name === self::WAIT;
     }
 
     public function isActive(): bool
     {
-        return $this->_name === self::ACTIVE;
+        return $this->name === self::ACTIVE;
     }
 }

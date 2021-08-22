@@ -14,13 +14,13 @@ use App\Auth\Entity\User\NetworkIdentity;
 
 class Handler
 {
-    private UserRepository $_users;
-    private Flusher $_flusher;
+    private UserRepository $users;
+    private Flusher $flusher;
 
     public function __construct(UserRepository $users, Flusher $flusher)
     {
-        $this->_users = $users;
-        $this->_flusher = $flusher;
+        $this->users = $users;
+        $this->flusher = $flusher;
     }
 
     public function handle(Command $command): void
@@ -28,11 +28,11 @@ class Handler
         $identity = new NetworkIdentity($command->network, $command->identity);
         $email = new Email($command->email);
 
-        if ($this->_users->hasByNetwork($identity)) {
+        if ($this->users->hasByNetwork($identity)) {
             throw new DomainException('User with this network already exists.');
         }
 
-        if ($this->_users->hasByEmail($email)) {
+        if ($this->users->hasByEmail($email)) {
             throw new DomainException('User with this email already exists.');
         }
 
@@ -43,7 +43,7 @@ class Handler
             $identity
         );
 
-        $this->_users->add($user);
-        $this->_flusher->flush();
+        $this->users->add($user);
+        $this->flusher->flush();
     }
 }

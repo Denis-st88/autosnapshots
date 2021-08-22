@@ -11,25 +11,25 @@ use App\Auth\Entity\User\NetworkIdentity;
 
 class Handler
 {
-    private UserRepository $_users;
-    private Flusher $_flusher;
+    private UserRepository $users;
+    private Flusher $flusher;
 
     public function __construct(UserRepository $users, Flusher $flusher)
     {
-        $this->_users = $users;
-        $this->_flusher = $flusher;
+        $this->users = $users;
+        $this->flusher = $flusher;
     }
 
     public function handle(Command $command): void
     {
         $identity = new NetworkIdentity($command->network, $command->identity);
 
-        if ($this->_users->hasByNetwork($identity)) {
+        if ($this->users->hasByNetwork($identity)) {
             throw new DomainException('User with this network already exists.');
         }
 
-        $user = $this->_users->get(new Id($command->id));
+        $user = $this->users->get(new Id($command->id));
         $user->attachNetwork($identity);
-        $this->_flusher->flush();
+        $this->flusher->flush();
     }
 }

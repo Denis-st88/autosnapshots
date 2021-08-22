@@ -9,17 +9,17 @@ use InvalidArgumentException;
 
 class Email
 {
-    private string $_value;
+    private string $value;
 
     public function __construct(string $value)
     {
         Assert::notEmpty($value);
         Assert::email($value);
-        $this->_value = mb_strtolower($value);
+        $this->value = mb_strtolower($value);
     }
 
     public function getValue(): string
     {
-        return $this->_value;
+        return $this->value;
     }
 }

@@ -11,18 +11,18 @@ use App\Auth\Entity\User\Token;
 
 class Tokenizer
 {
-    private DateInterval $_interval;
+    private DateInterval $interval;
 
     public function __construct(DateInterval $interval)
     {
-        $this->_interval = $interval;
+        $this->interval = $interval;
     }
 
     public function generate(DateTimeImmutable $date): Token
     {
         return new Token(
             Uuid::uuid4()->toString(),
-            $date->add($this->_interval)
+            $date->add($this->interval)
         );
     }
 }

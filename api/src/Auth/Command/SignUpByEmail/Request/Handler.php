@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Auth\Command\SignUpByEmail\Request;
 
+use App\Auth\Entity\User\UserRepository;
+use App\Auth\Service\PasswordHasher;
+use App\Auth\Service\Tokenizer;
 use DomainException;
 use DateTimeImmutable;
 use App\Auth\Entity\User\Id;
@@ -12,11 +15,11 @@ use App\Auth\Entity\User\Email;
 
 class Handler
 {
-    private UserRepository $_users;
-    private PasswordHasher $_hasher;
-    private Tokenizer $_tokenizer;
-    private Flusher $_flusher;
-    private SignUpConfirmSender $_sender;
+    private UserRepository $users;
+    private PasswordHasher $hasher;
+    private Tokenizer $tokenizer;
+    private Flusher $flusher;
+    private SignUpConfirmSender $sender;
 
     public function __construct(
         UserRepository $users,
@@ -24,13 +27,12 @@ class Handler
         Tokenizer $tokenizer,
         Flusher $flusher,
         SignUpConfirmSender $sender
-    )
-    {
-        $this->_users = $users;
-        $this->_hasher = $hasher;
-        $this->_tokenizer = $tokenizer;
-        $this->_flusher = $flusher;
-        $this->_sender = $sender;
+    ) {
+        $this->users = $users;
+        $this->hasher = $hasher;
+        $this->tokenizer = $tokenizer;
+        $this->flusher = $flusher;
+        $this->sender = $sender;
     }
 
     public function handle(Command $command): void
@@ -43,7 +45,7 @@ class Handler
 
         $date = new DateTimeImmutable();
 
-        $user = new User(
+        $user = User::requestSignUpByEmail(
             Id::generate(),
             $date,
             $email,
@@ -51,8 +53,8 @@ class Handler
             $token = $this->tokenizer->generate($date)
         );
 
-        $this->_users->add($user);
-        $this->_flusher->flush();
-        $this->_sender->send($email, $token);
+        $this->users->add($user);
+        $this->flusher->flush();
+        $this->sender->send($email, $token);
     }
 }

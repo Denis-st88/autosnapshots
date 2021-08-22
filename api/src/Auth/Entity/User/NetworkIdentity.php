@@ -8,15 +8,15 @@ use Webmozart\Assert\Assert;
 
 class NetworkIdentity
 {
-    private string $_network;
-    private string $_identity;
+    private string $network;
+    private string $identity;
 
     public function __construct(string $network, string $identity)
     {
         Assert::notEmpty($network);
         Assert::notEmpty($identity);
-        $this->_network = mb_strtolower($network);
-        $this->_identity = mb_strtolower($identity);
+        $this->network = mb_strtolower($network);
+        $this->identity = mb_strtolower($identity);
     }
 
     public function isEqualTo(self $network): bool
@@ -28,11 +28,11 @@ class NetworkIdentity
 
     public function getNetwork(): string
     {
-        return $this->_network;
+        return $this->network;
     }
 
     public function getIdentity(): string
     {
-        return $this->_identity;
+        return $this->identity;
     }
 }

@@ -10,22 +10,22 @@ use App\Auth\Entity\User\UserRepository;
 
 class Handler
 {
-    private Flusher $_flusher;
-    private UserRepository $_users;
+    private Flusher $flusher;
+    private UserRepository $users;
 
     public function __construct(UserRepository $users, Flusher $flusher)
     {
-        $this->_users = $users;
-        $this->_flusher = $flusher;
+        $this->users = $users;
+        $this->flusher = $flusher;
     }
 
     public function handle(Command $command): void
     {
-        if (!$user = $this->_users->findByConfirmToken($command->token)) {
+        if (!$user = $this->users->findByConfirmToken($command->token)) {
             throw new DomainException('Incorrect token.');
         }
 
         $user->confirmSignUp($command->token, new DateTimeImmutable());
-        $this->_flusher->flush();
+        $this->flusher->flush();
     }
 }

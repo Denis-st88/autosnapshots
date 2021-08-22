@@ -10,22 +10,22 @@ use DateTimeImmutable;
 
 class User
 {
-    private Id $_id;
-    private Email $_email;
-    private Status $_status;
-    private ?string $_passwordHash = null;
-    private DateTimeImmutable $_date;
-    private ?Token $_signUpConfirmToken = null;
-    private ArrayObject $_networks;
-    private ?Token $_passwordResetToken = null;
+    private Id $id;
+    private Email $email;
+    private Status $status;
+    private ?string $passwordHash = null;
+    private DateTimeImmutable $date;
+    private ?Token $signUpConfirmToken = null;
+    private ArrayObject $networks;
+    private ?Token $passwordResetToken = null;
 
     public function __construct(Id $id, DateTimeImmutable $date, Email $email, Status $status)
     {
-        $this->_id = $id;
-        $this->_date = $date;
-        $this->_email = $email;
-        $this->_status = $status;
-        $this->_networks = new ArrayObject();
+        $this->id = $id;
+        $this->date = $date;
+        $this->email = $email;
+        $this->status = $status;
+        $this->networks = new ArrayObject();
     }
 
     public static function requestSignUpByEmail(
@@ -36,8 +36,8 @@ class User
         Token $token
     ): self {
         $user = new self($id, $date, $email, Status::wait());
-        $user->_passwordHash = $passwordHash;
-        $user->_signUpConfirmToken = $token;
+        $user->passwordHash = $passwordHash;
+        $user->signUpConfirmToken = $token;
         return $user;
     }
 
@@ -48,30 +48,30 @@ class User
         NetworkIdentity $identity
     ): self {
         $user = new self($id, $date, $email, Status::active());
-        $user->_networks->append($identity);
+        $user->networks->append($identity);
         return $user;
     }
 
     public function attachNetwork(NetworkIdentity $identity): void
     {
         /** @var NetworkIdentity $existing $existing */
-        foreach ($this->_networks as $existing) {
+        foreach ($this->networks as $existing) {
             if ($existing->isEqualTo($identity)) {
                 throw new DomainException('Network already attached.');
             }
         }
-        $this->_networks->append($identity);
+        $this->networks->append($identity);
     }
 
     public function confirmSignUp(string $token, DateTimeImmutable $date): void
     {
-        if ($this->_signUpConfirmToken === null) {
+        if ($this->signUpConfirmToken === null) {
             throw new DomainException('Confirmation is not required.');
         }
 
-        $this->_signUpConfirmToken->validate($token, $date);
-        $this->_status = Status::active();
-        $this->_signUpConfirmToken = null;
+        $this->signUpConfirmToken->validate($token, $date);
+        $this->status = Status::active();
+        $this->signUpConfirmToken = null;
     }
 
     public function requestPasswordReset(Token $token, DateTimeImmutable $date): void
@@ -79,45 +79,45 @@ class User
         if (!$this->isActive()) {
             throw new DomainException('User is not active.');
         }
-        if ($this->_passwordResetToken !== null && !$this->_passwordResetToken->isExpiredTo($date)) {
+        if ($this->passwordResetToken !== null && !$this->passwordResetToken->isExpiredTo($date)) {
             throw new DomainException('Resetting is already requested.');
         }
-        $this->_passwordResetToken = $token;
+        $this->passwordResetToken = $token;
     }
 
     public function isWait(): bool
     {
-        return $this->_status->isWait();
+        return $this->status->isWait();
     }
 
     public function isActive(): bool
     {
-        return $this->_status->isActive();
+        return $this->status->isActive();
     }
 
     public function getId(): Id
     {
-        return $this->_id;
+        return $this->id;
     }
 
     public function getDate(): DateTimeImmutable
     {
-        return $this->_date;
+        return $this->date;
     }
 
     public function getEmail(): Email
     {
-        return $this->_email;
+        return $this->email;
     }
 
     public function getPasswordHash(): ?string
     {
-        return $this->_passwordHash;
+        return $this->passwordHash;
     }
 
     public function getSignUpConfirmToken(): ?Token
     {
-        return $this->_signUpConfirmToken;
+        return $this->signUpConfirmToken;
     }
 
     /**
@@ -126,11 +126,11 @@ class User
     public function getNetworks(): array
     {
         /** @var NetworkIdentity[] */
-        return $this->_networks->getArrayCopy();
+        return $this->networks->getArrayCopy();
     }
 
     public function getPasswordResetToken(): ?Token
     {
-        return $this->_passwordResetToken;
+        return $this->passwordResetToken;
     }
 }
