@@ -8,7 +8,7 @@ use ArrayObject;
 use DomainException;
 use DateTimeImmutable;
 
-class User
+class User /* @TODO спам и безопасность */
 {
     private Id $id;
     private Email $email;
@@ -83,6 +83,16 @@ class User
             throw new DomainException('Resetting is already requested.');
         }
         $this->passwordResetToken = $token;
+    }
+
+    public function resetPassword(string $token, DateTimeImmutable $date, string $hash): void
+    {
+        if ($this->passwordResetToken === null) {
+            throw new DomainException('Resetting is already requested.');
+        }
+        $this->passwordResetToken->validate($token, $date);
+        $this->passwordResetToken = null;
+        $this->passwordHash = $hash;
     }
 
     public function isWait(): bool
