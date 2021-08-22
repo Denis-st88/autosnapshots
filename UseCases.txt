@@ -20,6 +20,7 @@ Module || Service (Auth):
 
     - Reset Password
           Request
+              email + token
           Reset
 
     - Change Email

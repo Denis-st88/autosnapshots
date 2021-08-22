@@ -31,7 +31,7 @@ class Token
         }
     }
 
-    public function isEqualTo(string $value): bool
+    private function isEqualTo(string $value): bool
     {
         return $this->_value === $value;
     }

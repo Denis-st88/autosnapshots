@@ -33,6 +33,6 @@ class SignUpByNetworkTest extends TestCase
         self::assertTrue($user->isActive());
 
         self::assertCount(1, $networks = $user->getNetworks());
-        self::assertEquals($networks, $networks[0] ?? null);
+        self::assertEquals($network, $networks[0] ?? null);
     }
 }

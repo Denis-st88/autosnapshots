@@ -17,6 +17,7 @@ class User
     private DateTimeImmutable $_date;
     private ?Token $_signUpConfirmToken = null;
     private ArrayObject $_networks;
+    private ?Token $_passwordResetToken = null;
 
     public function __construct(Id $id, DateTimeImmutable $date, Email $email, Status $status)
     {
@@ -73,6 +74,17 @@ class User
         $this->_signUpConfirmToken = null;
     }
 
+    public function requestPasswordReset(Token $token, DateTimeImmutable $date): void
+    {
+        if (!$this->isActive()) {
+            throw new DomainException('User is not active.');
+        }
+        if ($this->_passwordResetToken !== null && !$this->_passwordResetToken->isExpiredTo($date)) {
+            throw new DomainException('Resetting is already requested.');
+        }
+        $this->_passwordResetToken = $token;
+    }
+
     public function isWait(): bool
     {
         return $this->_status->isWait();
@@ -115,5 +127,10 @@ class User
     {
         /** @var NetworkIdentity[] */
         return $this->_networks->getArrayCopy();
+    }
+
+    public function getPasswordResetToken(): ?Token
+    {
+        return $this->_passwordResetToken;
     }
 }
