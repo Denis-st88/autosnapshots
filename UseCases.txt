@@ -1,3 +1,4 @@
+DDD
 Use Cases
 
 CQS
@@ -21,6 +22,8 @@ Module || Service (Auth):
     - Reset Password
           Request
           Reset
+
+    - Change Password
 
     - Change Email
           Request
