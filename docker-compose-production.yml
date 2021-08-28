@@ -34,3 +34,16 @@ services:
     image: ${REGISTRY}/autosnapshots-cli-php-fpm:${IMAGE_TAG}
     environment:
       APP_DEBUG: 0
+
+  api-postgres:
+    image: postgres:13.4-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: api
+      POSTGRES_PASSWORD: ${API_DB_PASSWORD}
+      POSTGRES_DB: api
+    volumes:
+      - api-postgres:/var/lib/postgresql/data
+
+volumes:
+  api-postgres:
