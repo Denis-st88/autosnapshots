@@ -29,8 +29,6 @@ Module || Service (Auth):
           Request
           Confirm
 
-    ? Role
-
     - Remove
 
 -----------------------------
