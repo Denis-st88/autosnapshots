@@ -29,11 +29,20 @@ services:
     environment:
       APP_ENV: prod
       APP_DEBUG: 0
+      DB_HOST: api-postgres
+      DB_USER: api
+      DB_PASSWORD: ${API_DB_PASSWORD}
+      DB_NAME: api
 
   api-php-cli:
     image: ${REGISTRY}/autosnapshots-cli-php-fpm:${IMAGE_TAG}
     environment:
+      APP_ENV: prod
       APP_DEBUG: 0
+      DB_HOST: api-postgres
+      DB_USER: api
+      DB_PASSWORD: ${API_DB_PASSWORD}
+      DB_NAME: api
 
   api-postgres:
     image: postgres:13.4-alpine

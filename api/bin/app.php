@@ -3,7 +3,9 @@
 
 declare(strict_types=1);
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Application;
+use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -17,6 +19,11 @@ $cli = new Application('Console');
  * @psalm-suppress MixedArrayAccess
  */
 $commands = $container->get('config')['console']['commands'];
+
+$entityManager = $container->get(EntityManagerInterface::class);
+$cli->getHelperSet()->set(new EntityManagerHelper($entityManager), 'em');
+
+\Doctrine\ORM\Tools\Console\ConsoleRunner::addCommands($cli);
 
 foreach ($commands as $name) {
     /** @var Symfony\Component\Console\Command\Command $command */

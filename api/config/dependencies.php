@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 $files = array_merge(
     glob(__DIR__ . '/common/*.php'),
-    glob(__DIR__ . '/' . (getenv('APP_ENV') ?: 'prod')) ?: []
+    glob(__DIR__ . '/' . (getenv('APP_ENV') ?: 'prod') . '/*.php') ?: []
 );
 
 $configs = array_map(
@@ -19,4 +19,4 @@ $configs = array_map(
     $files
 );
 
-return array_merge_recursive(...$configs);
+return array_replace_recursive(...$configs);
