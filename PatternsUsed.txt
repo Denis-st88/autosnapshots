@@ -1,0 +1,28 @@
+PATTERNS:
+    DDD
+    CQS
+    Code First
+        Code -> Migrations -> DB
+
+TECHNOLOGY:
+    AWS         Nginx       PostgreSQL
+    Docker      ?Ansible
+    Terraform   Doctrine
+
+USE CASES:
+    First modules then services
+
+    (Auth):
+        - Sign Up By Email
+              Request
+              Confirm
+        - Sign Up By Network
+        - Attach Network
+        - Reset Password
+              Request
+              Reset
+        - Change Password
+        - Change Email
+              Request
+              Confirm
+        - Remove
