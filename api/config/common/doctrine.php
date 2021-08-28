@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use DI\Container;
 use Doctrine\ORM\Tools\Setup;
+use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Cache\Psr6\DoctrineProvider;
@@ -39,6 +40,12 @@ return [
 
         $config->setNamingStrategy(new UnderscoreNamingStrategy());
 
+        foreach ($settings['types'] as $name => $class) {
+            if (!Type::hasType($name)) {
+                Type::addType($name, $class);
+            }
+        }
+
         return EntityManager::create(
             $settings['connection'],
             $config
@@ -58,7 +65,12 @@ return [
                 'name' => getenv('DB_NAME'),
                 'charset' => 'utf-8',
             ],
-            'metadata_dirs' => []
+            'metadata_dirs' => [
+                __DIR__ . '/../../src/Auth/Entity'
+            ],
+            'types' => [
+                \App\Auth\Entity\User\IdType::NAME => \App\Auth\Entity\User\IdType::class
+            ]
         ]
     ]
 ];

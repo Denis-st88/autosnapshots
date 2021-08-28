@@ -9,7 +9,7 @@ use App\Auth\Entity\User\Id;
 use App\Auth\Entity\User\User;
 use PHPUnit\Framework\TestCase;
 use App\Auth\Entity\User\Email;
-use App\Auth\Entity\User\NetworkIdentity;
+use App\Auth\Entity\User\Network;
 
 /**
  * @covers User
@@ -22,7 +22,7 @@ class SignUpByNetworkTest extends TestCase
             $id = Id::generate(),
             $date = new DateTimeImmutable(),
             $email = new Email('email@app.test'),
-            $network = new NetworkIdentity('vk', '0000001')
+            $network = new Network('vk', '0000001')
         );
 
         self::assertEquals($id, $user->getId());

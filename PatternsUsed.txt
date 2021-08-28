@@ -5,9 +5,9 @@ PATTERNS:
         Code -> Migrations -> DB
 
 TECHNOLOGY:
-    AWS         Nginx       PostgreSQL
+    AWS         Nginx
     Docker      ?Ansible
-    Terraform   Doctrine
+    Terraform   PostgreSQL
 
 USE CASES:
     First modules then services

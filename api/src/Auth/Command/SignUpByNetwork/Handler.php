@@ -10,7 +10,7 @@ use App\Auth\Entity\User\Id;
 use App\Auth\Entity\User\User;
 use App\Auth\Entity\User\Email;
 use App\Auth\Entity\User\UserRepository;
-use App\Auth\Entity\User\NetworkIdentity;
+use App\Auth\Entity\User\Network;
 
 class Handler
 {
@@ -25,7 +25,7 @@ class Handler
 
     public function handle(Command $command): void
     {
-        $identity = new NetworkIdentity($command->network, $command->identity);
+        $identity = new Network($command->network, $command->identity);
         $email = new Email($command->email);
 
         if ($this->users->hasByNetwork($identity)) {
