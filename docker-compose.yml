@@ -54,7 +54,10 @@ services:
     environment:
       APP_ENV: dev
       APP_DEBUG: 1
-      DB_URL: pgsql://api:secret@api-postgres:5432/api
+      DB_HOST: api-postgres
+      DB_USER: api
+      DB_PASSWORD: secret
+      DB_NAME: api
     volumes:
       - ./api:/app
 
