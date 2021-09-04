@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace App\Auth\Entity\User;
 
-use ArrayObject;
 use DomainException;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use App\Auth\Service\PasswordHasher;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  * @ORM\Table(name="auth_users")
  */
 class User /* @TODO спам и безопасность */
@@ -22,7 +24,14 @@ class User /* @TODO спам и безопасность */
      */
     private Id $id;
 
+    /**
+     * @ORM\Column(type="auth_user_email", unique=true)
+     */
     private Email $email;
+
+    /**
+     * @ORM\Column(type="auth_user_status", length=16)
+     */
     private Status $status;
 
     /**
@@ -35,11 +44,30 @@ class User /* @TODO спам и безопасность */
      */
     private DateTimeImmutable $date;
 
+    /**
+     * @ORM\Embedded(class="Token")
+     */
     private ?Token $signUpConfirmToken = null;
-    private ArrayObject $networks;
+
+    /**
+     * @ORM\Embedded(class="Token")
+     */
     private ?Token $passwordResetToken = null;
+
+    /**
+     * @ORM\Column(type="auth_user_email", nullable=true)
+     */
     private ?Email $newEmail = null;
+
+    /**
+     * @ORM\Embedded(class="Token")
+     */
     private ?Token $newEmailToken = null;
+
+    /**
+     * @ORM\OneToMany(targetEntity="UserNetwork", mappedBy="user", cascade={"all"}, orphanRemoval=true)
+     */
+    private Collection $networks;
 
     public function __construct(Id $id, DateTimeImmutable $date, Email $email, Status $status)
     {
@@ -47,7 +75,7 @@ class User /* @TODO спам и безопасность */
         $this->date = $date;
         $this->email = $email;
         $this->status = $status;
-        $this->networks = new ArrayObject();
+        $this->networks = new ArrayCollection();
     }
 
     public static function requestSignUpByEmail(
@@ -70,19 +98,19 @@ class User /* @TODO спам и безопасность */
         Network $network
     ): self {
         $user = new self($id, $date, $email, Status::active());
-        $user->networks->append($network);
+        $user->networks->add(new UserNetwork($user, $network));
         return $user;
     }
 
-    public function attachNetwork(Network $identity): void
+    public function attachNetwork(Network $network): void
     {
-        /** @var Network $existing $existing */
+        /** @var UserNetwork $existing */
         foreach ($this->networks as $existing) {
-            if ($existing->isEqualTo($identity)) {
+            if ($existing->getNetwork()->isEqualTo($network)) {
                 throw new DomainException('Network already attached.');
             }
         }
-        $this->networks->append($identity);
+        $this->networks->add(new UserNetwork($this, $network));
     }
 
     public function confirmSignUp(string $token, DateTimeImmutable $date): void
@@ -212,11 +240,29 @@ class User /* @TODO спам и безопасность */
     public function getNetworks(): array
     {
         /** @var Network[] */
-        return $this->networks->getArrayCopy();
+        return $this->networks->map(static function (UserNetwork $network) {
+            return $network->getNetwork();
+        })->toArray();
     }
 
     public function getPasswordResetToken(): ?Token
     {
         return $this->passwordResetToken;
+    }
+
+    /**
+     * @ORM\PostLoad()
+     */
+    public function checkEmbeds(): void
+    {
+        if ($this->signUpConfirmToken && $this->signUpConfirmToken->isEmpty()) {
+            $this->signUpConfirmToken = null;
+        }
+        if ($this->passwordResetToken && $this->passwordResetToken->isEmpty()) {
+            $this->passwordResetToken = null;
+        }
+        if ($this->newEmailToken && $this->newEmailToken->isEmpty()) {
+            $this->newEmailToken = null;
+        }
     }
 }
