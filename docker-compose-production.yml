@@ -40,17 +40,17 @@ services:
       APP_ENV: prod
       APP_DEBUG: 0
       DB_HOST: api-postgres
-      DB_USER: api
+      DB_USER: app
       DB_PASSWORD: ${API_DB_PASSWORD}
-      DB_NAME: api
+      DB_NAME: app
 
   api-postgres:
     image: postgres:13.4-alpine
     restart: always
     environment:
-      POSTGRES_USER: api
+      POSTGRES_USER: app
       POSTGRES_PASSWORD: ${API_DB_PASSWORD}
-      POSTGRES_DB: api
+      POSTGRES_DB: app
     volumes:
       - api-postgres:/var/lib/postgresql/data
 
