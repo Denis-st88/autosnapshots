@@ -10,7 +10,7 @@ return [
     'config' => [
         'console' => [
             'commands' => [
-                Console\HelloCommand::class,
+                Console\FixturesLoadCommand::class,
                 ValidateSchemaCommand::class,
 
                 Migrations\Tools\Console\Command\ExecuteCommand::class,

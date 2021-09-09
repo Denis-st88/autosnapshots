@@ -50,7 +50,7 @@ api-lint:
 api-analyze:
 	docker-compose run --rm api-php-cli composer psalm
 
-api-init: api-permissions api-composer-install api-wait-db api-migrations
+api-init: api-permissions api-composer-install api-wait-db api-migrations api-fixtures
 
 api-clear:
 	docker run --rm -v ${PWD}/api:/app -w /app alpine sh -c 'rm -rf var/*'
@@ -67,6 +67,9 @@ api-migrations:
 
 api-validate-schema:
 	docker-compose run --rm api-php-cli composer app orm:validate-schema
+
+api-fixtures:
+	docker-compose run --rm api-php-cli composer app fixtures:load
 
 
 ###################### TESTS
