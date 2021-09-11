@@ -3,11 +3,8 @@
 declare(strict_types=1);
 
 use Slim\App;
-use Psr\Container\ContainerInterface;
+use Slim\Middleware\ErrorMiddleware;
 
-return static function (App $app, ContainerInterface $container): void {
-    /** @psalm-var array{debug:bool} */
-    $config = $container->get('config');
-
-    $app->addErrorMiddleware($config['debug'], $config['env'] !== 'test', true);
+return static function (App $app): void {
+    $app->add(ErrorMiddleware::class);
 };

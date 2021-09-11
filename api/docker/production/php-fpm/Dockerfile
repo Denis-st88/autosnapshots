@@ -18,7 +18,9 @@ RUN composer install --no-dev --prefer-dist --no-progress --no-suggest --no-scri
 
 FROM php:8.0.6-fpm-alpine
 
-RUN docker-php-ext-install opcache
+RUN apk add postgresql-dev \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo_pgsql opcache
 
 RUN mv $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
 
@@ -28,5 +30,6 @@ COPY ./docker/production/php/conf.d /usr/local/etc/php/conf.d
 WORKDIR /app
 
 COPY --from=builder /app ./
-
 COPY ./ ./
+
+RUN chown www-data:www-data ./var -R
