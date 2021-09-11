@@ -11,6 +11,7 @@ return [
         'console' => [
             'commands' => [
                 Console\FixturesLoadCommand::class,
+                Console\MailCheckCommand::class,
                 ValidateSchemaCommand::class,
 
                 Migrations\Tools\Console\Command\ExecuteCommand::class,
