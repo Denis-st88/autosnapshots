@@ -24,6 +24,7 @@
         "monolog/monolog": "^2.3",
         "php-di/php-di": "^6.3",
         "ramsey/uuid": "^4.2",
+        "sentry/sdk": "dev-master",
         "slim/psr7": "^1.4",
         "slim/slim": "^4.8",
         "swiftmailer/swiftmailer": "^6.2",

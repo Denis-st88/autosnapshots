@@ -40,6 +40,7 @@ services:
       MAILER_ENCRYPTION: tls
       MAILER_FROM_EMAIL: ${API_MAILER_FROM_EMAIL}
       FRONTEND_URL: https://autosnapshots.com
+      SENTRY_DSN: https://1688354b9eb14d03a89c711395fd5f6c@o996733.ingest.sentry.io/5955224
 
   api-php-cli:
     image: ${REGISTRY}/autosnapshots-cli-php-fpm:${IMAGE_TAG}
@@ -57,6 +58,7 @@ services:
       MAILER_ENCRYPTION: tls
       MAILER_FROM_EMAIL: ${API_MAILER_FROM_EMAIL}
       FRONTEND_URL: https://autosnapshots.com
+      SENTRY_DSN: https://1688354b9eb14d03a89c711395fd5f6c@o996733.ingest.sentry.io/5955224
 
   api-postgres:
     image: postgres:13.4-alpine

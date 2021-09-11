@@ -9,10 +9,18 @@ use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+if (getenv('SENTRY_DSN')) {
+    Sentry\init(['dsn' => getenv('SENTRY_DSN')]);
+}
+
 /** @var Psr\Container\ContainerInterface $container */
 $container = require __DIR__ . '/../config/container.php';
 
 $cli = new Application('Console');
+
+if (getenv('SENTRY_DSN')) {
+    $cli->setCatchExceptions(false);
+}
 
 /**
  * @var string[] $commands
