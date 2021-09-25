@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace App\Auth\Command\SignUpByEmail\Request;
 
-use App\Auth\Entity\User\UserRepository;
-use App\Auth\Service\PasswordHasher;
-use App\Auth\Service\Tokenizer;
+use App\Flusher;
 use DomainException;
 use DateTimeImmutable;
 use App\Auth\Entity\User\Id;
 use App\Auth\Entity\User\User;
 use App\Auth\Entity\User\Email;
+use App\Auth\Service\Tokenizer;
+use App\Auth\Service\PasswordHasher;
+use App\Auth\Entity\User\UserRepository;
+use App\Auth\Service\SignUpConfirmationSender;
 
 class Handler
 {
@@ -19,14 +21,14 @@ class Handler
     private PasswordHasher $hasher;
     private Tokenizer $tokenizer;
     private Flusher $flusher;
-    private SignUpConfirmSender $sender;
+    private SignUpConfirmationSender $sender;
 
     public function __construct(
         UserRepository $users,
         PasswordHasher $hasher,
         Tokenizer $tokenizer,
         Flusher $flusher,
-        SignUpConfirmSender $sender
+        SignUpConfirmationSender $sender
     ) {
         $this->users = $users;
         $this->hasher = $hasher;
@@ -40,7 +42,7 @@ class Handler
         $email = new Email($command->email);
 
         if ($this->users->hasByEmail($email)) {
-            throw new DomainException('User already exists');
+            throw new DomainException('User already exists.');
         }
 
         $date = new DateTimeImmutable();

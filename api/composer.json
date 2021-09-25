@@ -34,6 +34,7 @@
         "webmozart/assert": "^1.10"
     },
     "require-dev": {
+        "dms/phpunit-arraysubset-asserts": "^0.3",
         "doctrine/data-fixtures": "^1.5",
         "overtrue/phplint": "^8.0",
         "phpunit/phpunit": "^9.5",

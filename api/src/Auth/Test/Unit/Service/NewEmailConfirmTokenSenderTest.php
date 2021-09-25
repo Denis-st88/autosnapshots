@@ -67,3 +67,4 @@ final class NewEmailConfirmTokenSenderTest extends TestCase
         $sender->send($to, $token);
     }
 }
+

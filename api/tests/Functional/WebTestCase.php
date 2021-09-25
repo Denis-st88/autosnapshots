@@ -12,16 +12,13 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class WebTestCase extends TestCase
 {
-    /**
-     * @param string $method
-     * @param string $path
-     * @return ServerRequestInterface
-     */
-    protected static function json(string $method, string $path): ServerRequestInterface
+    protected static function json(string $method, string $path, array $body = []): ServerRequestInterface
     {
-        return self::request($method, $path)
+        $request = self::request($method, $path)
             ->withHeader('Accept', 'application/json')
             ->withHeader('Content-Type', 'application/json');
+        $request->getBody()->write(json_encode($body, JSON_THROW_ON_ERROR));
+        return $request;
     }
 
     /**
